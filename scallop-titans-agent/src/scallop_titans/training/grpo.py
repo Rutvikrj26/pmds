@@ -35,11 +35,11 @@ class GRPOConfig:
     model_name: str = "Qwen/Qwen3-32B"
     sft_adapter_path: Path | None = None  # Load SFT adapter if provided
 
-    # GRPO Algorithm (PROTOTYPE - aggressive optimization for speed)
-    group_size: int = 4  # Reduced from 8 for 2x faster generation
-    kl_penalty: float = 0.01  # KL divergence penalty (more policy flexibility)
+    # GRPO Algorithm (Optimized for 3x H100)
+    group_size: int = 8  # Standard Group Size (Stable)
+    kl_penalty: float = 0.01
     temperature: float = 0.7
-    max_new_tokens: int = 128  # Reduced from 256 for faster generation
+    max_new_tokens: int = 1024  # Increased to 1024 for deep reasoning chains
 
     # Reward weights (from master_plan.md)
     correctness_reward: float = 1.0
@@ -47,11 +47,11 @@ class GRPOConfig:
     logic_verify_reward: float = 0.3
     token_penalty: float = 0.01
 
-    # Training (PROTOTYPE - reduced for speed)
-    num_epochs: int = 1  # Reduced from 2
-    batch_size: int = 2  # Reduced from 8 to prevent OOM
-    gradient_accumulation_steps: int = 4
-    learning_rate: float = 5e-6  # Safer for RL training
+    # Training (Stable PoC)
+    num_epochs: int = 1  # Reduced to 1 for faster PoC
+    batch_size: int = 4  # Standard MVP (Stable at ~65GB)
+    gradient_accumulation_steps: int = 2  # Effective Batch = 4 * 3 * 2 = 24
+    learning_rate: float = 5e-6
     warmup_ratio: float = 0.1
 
     # Data
@@ -316,7 +316,9 @@ class GRPOTrainer:
             self.model.resize_token_embeddings(len(self.tokenizer))
 
             # Enable gradient checkpointing for memory efficiency
-            self.model.gradient_checkpointing_enable()
+            self.model.gradient_checkpointing_enable(
+                gradient_checkpointing_kwargs={"use_reentrant": False}
+            )
 
             # Load SFT adapter if provided
             if self.config.sft_adapter_path:
@@ -358,15 +360,29 @@ class GRPOTrainer:
             num_generations=self.config.group_size,
             # Generation settings via model's generation_config
             max_completion_length=self.config.max_new_tokens,
+            # Note: use_liger_loss=True would reduce memory 40% but requires liger-kernel
         )
 
-        # Create trainer
+        # PEFT/LoRA config for memory-efficient training
+        # This is CRITICAL - without it, we train full 32B params = OOM
+        from peft import LoraConfig
+
+        peft_config = LoraConfig(
+            r=16,  # Rank
+            lora_alpha=32,
+            lora_dropout=0.05,
+            target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+            task_type="CAUSAL_LM",
+        )
+
+        # Create trainer with PEFT for memory efficiency
         trainer = TRLGRPOTrainer(
             model=self.model,
             args=grpo_config,
             train_dataset=dataset,
             processing_class=self.tokenizer,
             reward_funcs=[self.reward_fn],
+            peft_config=peft_config,  # CRITICAL: reduces memory by 90%
         )
 
         # Train
