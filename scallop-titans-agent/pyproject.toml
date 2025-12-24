@@ -1,0 +1,66 @@
+[project]
+name = "scallop-titans-agent"
+version = "0.1.0"
+description = "Neuro-symbolic reasoning agent combining Titans memory with Scallop logic engine"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    {name = "Rutvik"}
+]
+dependencies = [
+    # Core ML
+    "torch>=2.2",
+    "transformers>=4.40",
+    "trl>=0.10",
+    "accelerate>=0.30",
+    "peft>=0.10",
+    # Titans dependencies
+    "einops>=0.8.0",
+    "einx>=0.3.0",
+    "tensordict",
+    # UI
+    "gradio>=4.0",
+    # Data
+    "datasets>=2.0",
+    # Logging
+    "wandb",
+]
+
+[project.optional-dependencies]
+scallop = ["scallopy>=0.1.0"]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov",
+    "ruff",
+    "mypy",
+]
+
+[tool.poetry.scripts]
+scallop-titans = "scallop_titans.main:main"
+convert-clutrr = "scallop_titans.data.trace_converter:main"
+generate-synthetic = "scallop_titans.data.synthetic_generator:main"
+mine-negatives = "scallop_titans.data.negative_miner:main"
+train-sft = "scallop_titans.training.sft:main"
+train-grpo = "scallop_titans.training.grpo:main"
+
+[tool.poetry]
+packages = [{include = "scallop_titans", from = "src"}]
+
+[tool.poetry.dependencies]
+# Local titans-pytorch as dev dependency
+titans-pytorch = {path = "../titans-pytorch", develop = true}
+
+[build-system]
+requires = ["poetry-core>=2.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

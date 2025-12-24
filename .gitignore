@@ -1,0 +1,91 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Training outputs & checkpoints (large files)
+outputs/
+checkpoints/
+*.pt
+*.pth
+*.safetensors
+*.bin
+
+# Data files (large)
+*.jsonl
+*.json
+!package.json
+!pyproject.json
+
+# Logs
+*.log
+wandb/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Rust/Cargo (for scallop-lang)
+target/
+Cargo.lock
+
+# Node
+node_modules/
+
+# Misc
+*.bak
+*.tmp
+.cache/
+
+# ========================================
+# Project-specific ignores
+# ========================================
+
+# Virtual environments (any nested)
+**/.venv/
+**/venv/
+
+# Training outputs (large model files)
+**/outputs/
+**/checkpoints/
+
+# Rust target directories
+**/target/
+
+# Data files
+**/data/*.jsonl
+
+# Poetry lock (optional - remove if you want to track it)
+# poetry.lock

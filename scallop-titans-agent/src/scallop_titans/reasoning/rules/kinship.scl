@@ -1,0 +1,58 @@
+// Kinship relations for CLUTRR reasoning
+// These rules define family relationships
+
+// Base relations (provided as facts)
+type parent(String, String)
+type sibling(String, String)
+type spouse(String, String)
+type gender(String, String)
+
+// Derived relations
+rel mother(a, b) = parent(a, b) and gender(a, "female")
+rel father(a, b) = parent(a, b) and gender(a, "male")
+
+// Sibling relations
+rel brother(a, b) = sibling(a, b) and gender(a, "male")
+rel sister(a, b) = sibling(a, b) and gender(a, "female")
+
+// Extended family
+rel grandparent(a, c) = parent(a, b) and parent(b, c)
+rel grandmother(a, c) = grandparent(a, c) and gender(a, "female")
+rel grandfather(a, c) = grandparent(a, c) and gender(a, "male")
+
+rel aunt(a, c) = sibling(a, b) and parent(b, c) and gender(a, "female")
+rel uncle(a, c) = sibling(a, b) and parent(b, c) and gender(a, "male")
+
+rel cousin(a, b) = parent(p1, a) and sibling(p1, p2) and parent(p2, b)
+
+// In-law relations
+rel parent_in_law(a, b) = spouse(b, c) and parent(a, c)
+rel sibling_in_law(a, b) = spouse(b, c) and sibling(a, c)
+
+// Inference Axioms (Inverse Rules)
+// Allow high-level facts (e.g. from LLM) to imply base facts
+rel parent(a, b) = mother(a, b)
+rel gender(a, "female") = mother(a, _)
+
+rel parent(a, b) = father(a, b)
+rel gender(a, "male") = father(a, _)
+
+rel parent(b, a) = son(a, b)
+rel gender(a, "male") = son(a, _)
+
+rel parent(b, a) = daughter(a, b)
+rel gender(a, "female") = daughter(a, _)
+
+rel sibling(a, b) = brother(a, b)
+rel gender(a, "male") = brother(a, _)
+
+rel sibling(a, b) = sister(a, b)
+rel gender(a, "female") = sister(a, _)
+
+rel spouse(a, b) = husband(a, b)
+rel gender(a, "male") = husband(a, _)
+rel gender(b, "female") = husband(a, b)
+
+rel spouse(a, b) = wife(a, b)
+rel gender(a, "female") = wife(a, _)
+rel gender(b, "male") = wife(a, b)

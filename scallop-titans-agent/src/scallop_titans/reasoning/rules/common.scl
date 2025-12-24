@@ -1,0 +1,6 @@
+// Transitivity for arbitrary relations
+type transitive_rel(String, String, String)  // (relation_name, entity_a, entity_b)
+
+// Transitive closure
+rel transitive_closure(r, a, c) = transitive_rel(r, a, b) and transitive_rel(r, b, c)
+rel transitive_closure(r, a, b) = transitive_rel(r, a, b)
