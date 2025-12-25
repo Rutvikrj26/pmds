@@ -1,0 +1,345 @@
+=== GRPO TRAINING STATUS (2025-12-24 16:24:48) ===
+Progress: 7/2000 (0.4%)
+ETA: 32:21:52 remaining
+Speed: 58.46 s/step
+
+No metrics logged yet (waiting for Step 10).
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-24 17:24:48) ===
+Progress: 68/2000 (3.4%)
+ETA: 31:35:46 remaining
+Speed: 58.88 s/step
+
+Metrics:
+  Loss:           0.202
+  Reward (Mean):  -20.916667938232422
+  Clipped Ratio:  0.6250000178813935
+  Mean Length:    435.90001220703124
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-24 18:24:48) ===
+Progress: 129/2000 (6.5%)
+ETA: 30:38:31 remaining
+Speed: 58.96 s/step
+
+Metrics:
+  Loss:           0.2273
+  Reward (Mean):  -20.21750087738037
+  Clipped Ratio:  0.545833358168602
+  Mean Length:    420.47084045410156
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-24 19:24:48) ===
+Progress: 190/2000 (9.5%)
+ETA: 29:37:17 remaining
+Speed: 58.92 s/step
+
+Metrics:
+  Loss:           0.2911
+  Reward (Mean):  -14.666458702087402
+  Clipped Ratio:  0.22500000558793545
+  Mean Length:    321.12084045410154
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-24 20:24:48) ===
+Progress: 254/2000 (12.7%)
+ETA: 27:41:51 remaining
+Speed: 57.11 s/step
+
+Metrics:
+  Loss:           0.2648
+  Reward (Mean):  -9.094583463668823
+  Clipped Ratio:  0.05000000111758709
+  Mean Length:    214.51250686645508
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-24 21:24:48) ===
+Progress: 317/2000 (15.8%)
+ETA: 27:35:19 remaining
+Speed: 59.01 s/step
+
+Metrics:
+  Loss:           0.4671
+  Reward (Mean):  -15.364584350585938
+  Clipped Ratio:  0.5500000149011612
+  Mean Length:    334.25000915527346
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-24 22:24:48) ===
+Progress: 378/2000 (18.9%)
+ETA: 26:32:16 remaining
+Speed: 58.90 s/step
+
+Metrics:
+  Loss:           -0.0
+  Reward (Mean):  -22.892084503173827
+  Clipped Ratio:  1.0
+  Mean Length:    512.0
+  Loop Check:     WARNING: High Clipping
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-24 23:24:48) ===
+Progress: 439/2000 (21.9%)
+ETA: 25:33:58 remaining
+Speed: 58.96 s/step
+
+Metrics:
+  Loss:           0.003
+  Reward (Mean):  -16.475209140777586
+  Clipped Ratio:  0.9958333373069763
+  Mean Length:    510.4375
+  Loop Check:     WARNING: High Clipping
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 00:24:48) ===
+Progress: 500/2000 (25.0%)
+ETA: 24:33:15 remaining
+Speed: 58.93 s/step
+
+Metrics:
+  Loss:           -0.0
+  Reward (Mean):  -4.922500157356263
+  Clipped Ratio:  1.0
+  Mean Length:    512.0
+  Loop Check:     WARNING: High Clipping
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 01:24:48) ===
+Progress: 37/2000 (1.8%)
+ETA: 32:01:02 remaining
+Speed: 58.72 s/step
+
+Metrics:
+  Loss:           0.0465
+  Reward (Mean):  -23.562917518615723
+  Clipped Ratio:  0.720833346247673
+  Mean Length:    486.7083404541016
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 02:24:48) ===
+Progress: 98/2000 (4.9%)
+ETA: 31:04:37 remaining
+Speed: 58.82 s/step
+
+Metrics:
+  Loss:           0.0566
+  Reward (Mean):  -23.378959274291994
+  Clipped Ratio:  0.6875000089406967
+  Mean Length:    479.8958435058594
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 03:24:48) ===
+Progress: 159/2000 (8.0%)
+ETA: 30:01:00 remaining
+Speed: 58.70 s/step
+
+Metrics:
+  Loss:           0.0349
+  Reward (Mean):  -24.257084465026857
+  Clipped Ratio:  0.8291666865348816
+  Mean Length:    498.6458404541016
+  Loop Check:     WARNING: High Clipping
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 04:24:48) ===
+Progress: 222/2000 (11.1%)
+ETA: 25:56:45 remaining
+Speed: 52.53 s/step
+
+Metrics:
+  Loss:           0.1497
+  Reward (Mean):  -13.319375896453858
+  Clipped Ratio:  0.14583333767950535
+  Mean Length:    295.2416748046875
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 05:24:48) ===
+Progress: 1237/2000 (61.9%)
+ETA: 32:50 remaining
+Speed:  2.58 s/step
+
+Metrics:
+  Loss:           0.0
+  Reward (Mean):  1.649999976158142
+  Clipped Ratio:  0.0
+  Mean Length:    8.0
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 06:24:48) ===
+Progress: 29/2000 (1.5%)
+ETA: 32:55:54 remaining
+Speed: 60.15 s/step
+
+Metrics:
+  Loss:           0.0055
+  Reward (Mean):  0.06338333021849393
+  Clipped Ratio:  0.7083333551883697
+  Mean Length:    486.90834655761716
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 07:24:48) ===
+Progress: 89/2000 (4.5%)
+ETA: 32:01:42 remaining
+Speed: 60.34 s/step
+
+Metrics:
+  Loss:           0.0075
+  Reward (Mean):  0.05129998931661248
+  Clipped Ratio:  0.712500023841858
+  Mean Length:    482.3208404541016
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 08:24:48) ===
+Progress: 148/2000 (7.4%)
+ETA: 31:02:08 remaining
+Speed: 60.33 s/step
+
+Metrics:
+  Loss:           0.0065
+  Reward (Mean):  0.154929169267416
+  Clipped Ratio:  0.6958333432674408
+  Mean Length:    478.7083435058594
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 09:24:48) ===
+Progress: 208/2000 (10.4%)
+ETA: 30:03:12 remaining
+Speed: 60.38 s/step
+
+Metrics:
+  Loss:           0.0331
+  Reward (Mean):  0.6482583492994308
+  Clipped Ratio:  0.6375000208616257
+  Mean Length:    477.10418090820315
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 10:24:48) ===
+Progress: 271/2000 (13.6%)
+ETA: 27:15:40 remaining
+Speed: 56.76 s/step
+
+Metrics:
+  Loss:           0.1271
+  Reward (Mean):  1.5066083908081054
+  Clipped Ratio:  0.03333333432674408
+  Mean Length:    252.68750762939453
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 11:24:48) ===
+Progress: 344/2000 (17.2%)
+ETA: 27:54:28 remaining
+Speed: 60.67 s/step
+
+Metrics:
+  Loss:           0.2807
+  Reward (Mean):  0.5490000039339066
+  Clipped Ratio:  0.4625000111758709
+  Mean Length:    367.37501220703126
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 12:24:48) ===
+Progress: 409/2000 (20.4%)
+ETA: 21:04:48 remaining
+Speed: 47.70 s/step
+
+Metrics:
+  Loss:           0.1756
+  Reward (Mean):  1.47277090549469
+  Clipped Ratio:  0.00833333358168602
+  Mean Length:    176.65000610351564
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 13:24:48) ===
+Progress: 471/2000 (23.5%)
+ETA: 25:16:29 remaining
+Speed: 59.51 s/step
+
+Metrics:
+  Loss:           0.4134
+  Reward (Mean):  1.2415583610534668
+  Clipped Ratio:  0.09583333544433117
+  Mean Length:    233.7166717529297
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 14:24:48) ===
+Progress: 530/2000 (26.5%)
+ETA: 24:26:40 remaining
+Speed: 59.86 s/step
+
+Metrics:
+  Loss:           0.5062
+  Reward (Mean):  1.124429178237915
+  Clipped Ratio:  0.10416666902601719
+  Mean Length:    234.03750762939453
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 15:24:48) ===
+Progress: 592/2000 (29.6%)
+ETA: 16:27:25 remaining
+Speed: 42.08 s/step
+
+Metrics:
+  Loss:           0.3237
+  Reward (Mean):  1.486625063419342
+  Clipped Ratio:  0.03333333432674408
+  Mean Length:    180.62083892822267
+  Loop Check:     OK
+
+============================================
+
+=== GRPO TRAINING STATUS (2025-12-25 16:24:48) ===
+Progress: 653/2000 (32.6%)
+ETA: 20:50:59 remaining
+Speed: 55.72 s/step
+
+Metrics:
+  Loss:           0.4653
+  Reward (Mean):  1.1391959100961686
+  Clipped Ratio:  0.07916666939854622
+  Mean Length:    202.4666732788086
+  Loop Check:     OK
+
+============================================
+

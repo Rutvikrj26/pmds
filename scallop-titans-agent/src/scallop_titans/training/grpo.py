@@ -37,15 +37,16 @@ class GRPOConfig:
 
     # GRPO Algorithm (Optimized for 3x H100)
     group_size: int = 8  # Standard Group Size (Stable)
-    kl_penalty: float = 0.01
+    beta: float = 0.04  # KL Penalty (DeepSeekMath Standard) - Forces reasoning anchor
     temperature: float = 0.7
-    max_new_tokens: int = 1024  # Increased to 1024 for deep reasoning chains
+    max_new_tokens: int = 512  # Reverted to 512 (1024 caused length explosion)
+    repetition_penalty: float = 1.05  # Gentle guard against loops (was 1.1)
 
     # Reward weights (from master_plan.md)
-    correctness_reward: float = 1.0
-    format_reward: float = 0.2
-    logic_verify_reward: float = 0.3
-    token_penalty: float = 0.01
+    correctness_reward: float = 2.0  # Increased to balance high penalties
+    format_reward: float = 0.5  # Increased to enforce structure
+    logic_verify_reward: float = 0.5
+    token_penalty: float = 0.001  # Reduced 50x (0.05 -> 0.001) to allow thinking
 
     # Training (Stable PoC)
     num_epochs: int = 1  # Reduced to 1 for faster PoC
@@ -353,6 +354,7 @@ class GRPOTrainer:
             gradient_accumulation_steps=self.config.gradient_accumulation_steps,
             learning_rate=self.config.learning_rate,
             warmup_ratio=self.config.warmup_ratio,
+            beta=self.config.beta,  # Set KL penalty explicitly
             bf16=self.config.bf16,
             logging_steps=10,
             save_steps=500,
@@ -362,6 +364,11 @@ class GRPOTrainer:
             max_completion_length=self.config.max_new_tokens,
             # Note: use_liger_loss=True would reduce memory 40% but requires liger-kernel
         )
+
+        # CRITICAL: Fix for "Length Explosion" / Repetition Loops
+        # We explicitly set generation config to prevent the model from getting stuck
+        self.model.generation_config.repetition_penalty = self.config.repetition_penalty
+        self.model.generation_config.pad_token_id = self.tokenizer.pad_token_id
 
         # PEFT/LoRA config for memory-efficient training
         # This is CRITICAL - without it, we train full 32B params = OOM
@@ -419,6 +426,25 @@ def main() -> None:
     dataset = load_dataset("json", data_files=str(config.data_path), split="train")
     print(f"Loaded {len(dataset)} samples from {config.data_path}")
 
+    # CRITICAL FIX: Apply chat template to align with SFT training
+    # SFT model expects <|im_start|>user...<|im_end|><|im_start|>assistant
+    from transformers import AutoTokenizer
+    # Load tokenizer separately to avoid loading full model into RAM
+    tokenizer = AutoTokenizer.from_pretrained(config.model_name, trust_remote_code=True)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+        
+    def format_prompt(example):
+        messages = [{"role": "user", "content": example["prompt"]}]
+        # apply_chat_template returns string. tokenize=False to keep it as string for GRPO
+        formatted = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+        return {"prompt": formatted}
+
+    # Process dataset BEFORE loading heavy model
+    print("Applying chat template to prompts...")
+    dataset = dataset.map(format_prompt)
+
+    # Initialize trainer (Heavy model load)
     trainer = GRPOTrainer(config)
     trainer.train(dataset)
 
