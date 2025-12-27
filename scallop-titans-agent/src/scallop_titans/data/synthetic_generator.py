@@ -166,7 +166,7 @@ class SyntheticTraceGenerator:
                         print(f"Generated {accepted}/{self.config.num_samples}")
                 
                 count += 1
-                if count > self.config.num_samples * 20: # Higher safety break
+                if count > self.config.num_samples * 100: # Higher safety break for hard k
                     print("Warning: High rejection rate.")
                     break
 
@@ -189,20 +189,31 @@ class SyntheticTraceGenerator:
             head = names[i]
             tail = names[i+1]
             
+            # Find valid candidates based on current gender constraints
             candidates = []
             for r in self.PRIMITIVES:
+                # 1. Check Head Gender vs Relation requirement for Head
+                # husband(A, B) -> A must be male.
                 req_head_gender, req_tail_gender = self.RELATION_GENDER.get(r, ("any", "any"))
+                
                 if genders[i] and req_head_gender != "any" and genders[i] != req_head_gender:
                     continue
+                
+                # 2. Check Tail Gender vs Relation requirement for Tail
+                # husband(A, B) -> B must be female.
                 if genders[i+1] and req_tail_gender != "any" and genders[i+1] != req_tail_gender:
                     continue
+                    
                 candidates.append(r)
             
-            if not candidates: return None
+            if not candidates:
+                # Backtracking would be better, but simple retry is okay if we fail early
+                return None
             
             rel = random.choice(candidates)
             chain.append((head, rel, tail))
             
+            # Propagate Constraints
             head_g, tail_g = self.RELATION_GENDER.get(rel, ("any", "any"))
             if head_g != "any": genders[i] = head_g
             if tail_g != "any": genders[i+1] = tail_g

@@ -3,7 +3,7 @@ name = "scallop-titans-agent"
 version = "0.1.0"
 description = "Neuro-symbolic reasoning agent combining Titans memory with Scallop logic engine"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12, <3.14"
 authors = [
     {name = "Rutvik"}
 ]
@@ -24,6 +24,8 @@ dependencies = [
     "datasets>=2.0",
     # Logging
     "wandb",
+    "py-cpuinfo (>=9.0.0,<10.0.0)",
+    "msgpack (>=1.1.2,<2.0.0)",
 ]
 
 [project.optional-dependencies]

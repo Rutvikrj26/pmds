@@ -1,0 +1,27 @@
+type link(source: String, target: String, ltype: String, security: String)
+type packet(security: String)
+
+// Define Security Levels explicitly to bind variables
+rel security_level("low")
+rel security_level("high")
+
+// Helper: Check if link security (ls) matches packet security (ps)
+// Case 1: Low security packet can traverse ANY valid link security level
+rel valid_security(ls, ps) = security_level(ls), ps == "low"
+// Case 2: High security packet needs High security link
+rel valid_security(ls, ps) = ps == "high", ls == "high"
+
+rel valid_link(a, b, t, s) = link(a, b, t, s), packet(p_sec), valid_security(s, p_sec)
+
+// Valid Transitions
+// Constraint: Cannot go Fiber -> WiFi due to "signal interference" (Simulated constraint)
+rel conversion_error(t1, t2) = t1 == "fiber", t2 == "wifi"
+
+// Base Case: 1 Hop
+rel path(a, b, t_last) = valid_link(a, b, t_last, _)
+
+// Recursive Case: Multi-hop
+rel path(a, c, t_last) = path(a, b, t_prev), valid_link(b, c, t_last, _), not conversion_error(t_prev, t_last)
+
+// Final Reachability
+rel reachable(a, b) = path(a, b, _)

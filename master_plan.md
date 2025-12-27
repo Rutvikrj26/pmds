@@ -61,11 +61,11 @@
 #### A. LLM (The "Brain")
 | Attribute | Specification |
 |---|---|
-| **Base Model** | `Qwen/Qwen3-32B` (Recommended) — fits on 1x H100, leaves 2 GPUs for Scallop/spare |
-| **Why Qwen3-32B?** | Outperforms Qwen2.5-72B on reasoning. Native "Thinking Mode". 36T training tokens. Superior agentic capabilities. |
-| **Special Tokens** | Leverage Qwen3's native `<think>`/`</think>`. Add only: `<|call_scallop|>`, `<|scallop_result|>` |
-| **Context Length** | 32K native, extendable to 256K (via YaRN). Supports very long reasoning chains. |
-| **Fallback** | If 32B is slow for RL iteration, drop to Qwen3-14B for faster cycles. |
+| **Base Model** | `Qwen/Qwen2.5-3B-Instruct` (Revised) |
+| **Why 3B?** | The 32B model was "too smart" (solved hard tasks via CoA without tools). A 3B model has limited context/reasoning, *forcing* it to rely on the Scallop tool for complex tasks. |
+| **Special Tokens** | Leverage Qwen's native tokens. Add: `<|call_scallop|>`, `<|scallop_result|>` |
+| **Context Length** | 32K. |
+| **Fallback** | If 3B is too incoherent, step up to Qwen2.5-7B. |
 
 > **Note:** Qwen3's built-in Thinking Mode reduces training burden—the model already knows how to "think out loud" before answering.
 
@@ -106,9 +106,10 @@
 | Pillar | Source | Size | Purpose |
 |---|---|---|---|
 | **I. Synthetic Logic Traces** | Custom Generator | 200k | Teach LLM to emit `<call_scallop>` with correct syntax |
-| **II. CLUTRR (Kinship)** | [HuggingFace CLUTRR/v1](https://huggingface.co/datasets/CLUTRR/v1) | ~10k | Benchmark for relational reasoning |
-| **III. GSM8K (Math)** | [OpenAI GSM8K](https://huggingface.co/datasets/gsm8k) | 8.5k | Test generalization to math reasoning |
-| **IV. Near-Miss Negatives** | Generated | 50k | Robustness to contradictions and red herrings |
+| **II. Diverse Logic Domains** | Multi-Domain Generator | 50k | **[NEW]** Routing, Logistics, Access Control, Scheduling. |
+| **III. CLUTRR (Kinship)** | [HuggingFace CLUTRR/v1](https://huggingface.co/datasets/CLUTRR/v1) | ~10k | Benchmark for relational reasoning |
+| **IV. GSM8K (Math)** | [OpenAI GSM8K](https://huggingface.co/datasets/gsm8k) | 8.5k | Test generalization to math reasoning |
+| **V. Near-Miss Negatives** | Generated | 50k | Robustness to contradictions and red herrings |
 
 ### 2. Data Format (SFT)
 ```json
@@ -292,11 +293,12 @@ class ScallopTitansAgent:
 | 1 | Setup & Spikes | Environment. **RS-1, RS-2** resolved. |
 | 2 | Titans Core | `NeuralMemory` class with surprise mechanism. Unit tests. |
 | 3 | Scallop Bridge | `titans_foreign_predicate`. Integration test. |
-| 4 | Data Generation | 200k synthetic traces. CLUTRR conversion. |
+| 4 | Data Generation | 200k synthetic traces. CLUTRR conversion. **Multi-Domain Gen.** |
 | 5-6 | SFT | Fine-tuned LLM. Eval on CLUTRR (k=2). |
 | 7-8 | GRPO | RL-tuned model. Eval on CLUTRR (k=4). |
 | 9 | Inference & Demo | vLLM server or Gradio demo. |
 | 10 | Documentation | Paper draft. Model card. Code cleanup. |
+| **Phase 6**| **Strategic Pivot** | **Train Small Model (3B)** on Diverse Domains. |
 
 ### Compute (Updated: 3x NVIDIA H100 NVL Available)
 | Resource | Available | Usage Plan |

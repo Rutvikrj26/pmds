@@ -1,17 +1,29 @@
 #!/bin/bash
 set -e
 
-echo "[1/4] Converting CLUTRR dataset..."
-poetry run convert-clutrr --csv data/clutrr/train.csv --output data/clutrr_train.jsonl
+# Scallop-Titans Agent: Master Plan 2.0 Data Generation
+# Generates 200k synthetic samples across multiple domains with SFT enhancements.
 
-echo "[2/4] Generating 100,000 synthetic traces..."
-poetry run generate-synthetic --count 100000 --output data/synthetic_train.jsonl
+echo "========================================================"
+echo "Starting Multi-Domain Data Generation"
+echo "========================================================"
+echo "Config:"
+echo "  - Total Samples: 200,000"
+echo "  - Negative Ratio: 10% (Unanswerable queries)"
+echo "  - Distractor Ratio: 20% (Noise/Irrelevant reasoning)"
+echo "  - Output Dir: data/multi_domain"
+echo "========================================================"
 
-echo "[3/4] Mining negative examples..."
-poetry run mine-negatives --input data/synthetic_train.jsonl --output data/synthetic_negatives.jsonl --ratio 0.2
+# Run the parallel generator
+# This uses all available CPU cores by default
+poetry run python -m scallop_titans.data.generators.multi_domain_generator \
+    --total 200000 \
+    --negative-ratio 0.1 \
+    --distractor-ratio 0.2 \
+    --output data/multi_domain
 
-echo "[4/4] Combining datasets..."
-cat data/clutrr_train.jsonl data/synthetic_train.jsonl data/synthetic_negatives.jsonl > data/combined_sft.jsonl
-
-echo "Process Complete! Data saved to data/combined_sft.jsonl"
-wc -l data/combined_sft.jsonl
+echo ""
+echo "Generation Complete!"
+echo "Combined dataset: data/multi_domain/all_domains.jsonl"
+echo "Sample count:"
+wc -l data/multi_domain/all_domains.jsonl
